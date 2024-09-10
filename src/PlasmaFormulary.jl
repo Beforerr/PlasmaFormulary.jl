@@ -2,16 +2,17 @@ module PlasmaFormulary
 
 using Unitful
 using UnitfulEquivalences
-using Unitful: μ0
+using Unitful: μ0, k
 
 @derived_dimension NumberDensity Unitful.𝐋^-3
 
 const EnergyOrTemp = Union{Unitful.Temperature, Unitful.Energy}
 energy(eot) = uconvert(u"J", eot, Thermal())
 temperature(eot) = uconvert(u"K", eot, Thermal())
+temperature(T:: Unitful.Temperature) = uconvert(u"K", T)
 
 # Physical Constants (SI)
-boltzmann_constant = 1.38065e-23 * u"J / K"
+boltzmann_constant = Unitful.k
 elementry_charge = 1.60219e-19 * u"C"
 electron_mass = 9.10938e-31 * u"kg"
 proton_mass = 1.67262e-27 * u"kg"
@@ -49,7 +50,7 @@ molar_weight_of_air = 2.89647e-2 * u"kg / mol"
 gravitational_acceleration = 9.80665 * u"m / s^2"
 
 # Common aliases
-k_B = boltzmann_constant
+k_B = Unitful.k
 
 # Fundamental plasma parameters
 # These formulas have been converted to use SI units from the original Gaussian cgs units
@@ -122,7 +123,7 @@ Calculate the thermal pressure for a Maxwellian distribution.
 - `n`: The particle number density.
 """
 function thermal_pressure(T::EnergyOrTemp, n::NumberDensity)
-    return n * k_B * temperature(T)
+    return n * k_B * temperature(T) |> upreferred
 end
 
 p_th = thermal_pressure
@@ -149,7 +150,9 @@ Compute the plamsa beta (β), the ratio of thermal pressure to magnetic pressure
 function beta(T::EnergyOrTemp, n::NumberDensity, B::Unitful.BField)
     p_th = thermal_pressure(T, n)
     p_B = magnetic_pressure(B)
-    return p_th / p_B
+    return p_th / p_B |> upreferred
 end
+
+include("speeds.jl")
 
 end
