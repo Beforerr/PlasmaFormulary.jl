@@ -4,7 +4,7 @@ using Unitful
 using UnitfulEquivalences
 using Unitful: μ0, ε0, c, q
 using Unitful: k, ħ
-using Unitful: me, mp
+using Unitful: me, mp, u
 
 @derived_dimension NumberDensity Unitful.𝐋^-3
 
@@ -145,5 +145,6 @@ function beta(T::EnergyOrTemp, n::NumberDensity, B::Unitful.BField)
 end
 
 include("speeds.jl")
+include("lengths.jl")
 
 end

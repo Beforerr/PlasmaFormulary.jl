@@ -8,6 +8,8 @@ function thermal_speed(
     return coeff * sqrt(k * temperature(T) / mass)
 end
 
+thermal_speed(T::EnergyOrTemp, mass_numb, args...) = thermal_speed(T, mass_numb * u, args...)
+
 function thermal_temperature(
     V::Unitful.Velocity,
     mass::Unitful.Mass,
