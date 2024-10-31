@@ -5,7 +5,13 @@ const rc_ = gyroradius
 """
 Calculate the radius of circular motion for a charged particle in a uniform magnetic field
 
-References: https://docs.plasmapy.org/en/latest/api/plasmapy.formulary.lengths.gyroradius.html
+References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/latest/api/plasmapy.formulary.lengths.gyroradius.html)
+
+# Examples
+```jldoctest
+julia> gyroradius(0.2u"T", 1e6u"K")
+0.006682528174870854 m
+```
 """
 function gyroradius(B, Vperp::Velocity; mass_numb=1, Z=1)
     mass = mass_numb * u
@@ -17,4 +23,4 @@ function gyroradius(B, T::EnergyOrTemp; mass_numb=1, Z=1)
     return gyroradius(B, Vperp; mass_numb, Z)
 end
 
-gyroradius(val, B::BField) = gyroradius(B, val)
+gyroradius(val::Union{Velocity, EnergyOrTemp}, B::BField; kw...) = gyroradius(B, val; kw...)
