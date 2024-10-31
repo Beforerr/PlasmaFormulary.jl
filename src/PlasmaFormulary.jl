@@ -5,6 +5,7 @@ using UnitfulEquivalences
 using Unitful: μ0, ε0, c, q
 using Unitful: k, ħ
 using Unitful: me, mp, u
+using Unitful: Velocity, Mass, BField
 
 @derived_dimension NumberDensity Unitful.𝐋^-3
 
