@@ -1,7 +1,5 @@
 export gyroradius, rc_
 
-const rc_ = gyroradius
-
 """
 Calculate the radius of circular motion for a charged particle in a uniform magnetic field
 
@@ -24,3 +22,5 @@ function gyroradius(B, T::EnergyOrTemp; mass_numb=1, Z=1)
 end
 
 gyroradius(val::Union{Velocity, EnergyOrTemp}, B::BField; kw...) = gyroradius(B, val; kw...)
+
+const rc_ = gyroradius
