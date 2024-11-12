@@ -1,3 +1,27 @@
+export Alfven_velocity, Alfven_speed
+
+function Alfven_velocity(B::BField, ρ::Density)
+    return B / sqrt(μ0 * ρ) |> upreferred
+end
+
+function Alfven_velocity(B::BField, n::NumberDensity; mass_numb = 1, Z = 1)
+    ρ = n * (mass_numb * mp + Z * me)
+    return Alfven_velocity(B, ρ)
+end
+
+Alfven_velocity(B::AbstractVector, args...; kwargs...) =
+    [Alfven_velocity(Bi, args...; kwargs...) for Bi in B]
+
+"""
+    Alfven_speed(args...; kwargs...)
+
+The typical propagation speed of magnetic disturbances in a quasineutral plasma.
+
+References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/stable/api/plasmapy.formulary.speeds.Alfven_speed.html)
+"""
+Alfven_speed(args...; kwargs...) = norm(Alfven_velocity(args...; kwargs...))
+
+
 function thermal_speed(
     T::EnergyOrTemp,
     mass::Unitful.Mass,
@@ -8,7 +32,8 @@ function thermal_speed(
     return coeff * sqrt(k * temperature(T) / mass)
 end
 
-thermal_speed(T::EnergyOrTemp, mass_numb, args...) = thermal_speed(T, mass_numb * u, args...)
+thermal_speed(T::EnergyOrTemp, mass_numb, args...) =
+    thermal_speed(T, mass_numb * u, args...)
 
 function thermal_temperature(
     V::Unitful.Velocity,

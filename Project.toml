@@ -4,6 +4,7 @@ authors = ["Luke Adams <luke@lukeclydeadams.com> and contributors"]
 version = "1.0.0-DEV"
 
 [deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 UnitfulEquivalences = "da9c4bc3-91c8-4f02-8a40-6b990d2a7e0c"
 

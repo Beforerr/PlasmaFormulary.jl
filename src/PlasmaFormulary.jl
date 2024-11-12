@@ -5,14 +5,15 @@ using UnitfulEquivalences
 using Unitful: μ0, ε0, c, q
 using Unitful: k, ħ
 using Unitful: me, mp, u
-using Unitful: Velocity, Mass, BField
+using Unitful: Velocity, Mass, BField, Density
+using LinearAlgebra
 
 @derived_dimension NumberDensity Unitful.𝐋^-3
 
-const EnergyOrTemp = Union{Unitful.Temperature, Unitful.Energy}
+const EnergyOrTemp = Union{Unitful.Temperature,Unitful.Energy}
 energy(eot) = uconvert(u"J", eot, Thermal())
 temperature(eot) = uconvert(u"K", eot, Thermal())
-temperature(T:: Unitful.Temperature) = uconvert(u"K", T)
+temperature(T::Unitful.Temperature) = uconvert(u"K", T)
 
 # Physical Constants (SI)
 gravitational_constant = 6.67430e-11 * u"m^3 / s^2 / kg"
@@ -51,7 +52,11 @@ function electron_gyrofrequency(magnetic_field::Unitful.BField)
     upreferred(q * magnetic_field / me)
 end
 
-function ion_gyrofrequency(magnetic_field::Unitful.BField; charge_state::Integer = 1, ion_mass::Unitful.Mass = mp)
+function ion_gyrofrequency(
+    magnetic_field::Unitful.BField;
+    charge_state::Integer = 1,
+    ion_mass::Unitful.Mass = mp,
+)
     upreferred(charge_state * q * magnetic_field / ion_mass)
 end
 
@@ -59,7 +64,11 @@ function electron_plasma_frequency(density::NumberDensity)
     upreferred(sqrt(density * q^2 / me / ε0))
 end
 
-function ion_plasma_frequency(density::NumberDensity, charge_state::Integer, ion_mass::Unitful.Mass)
+function ion_plasma_frequency(
+    density::NumberDensity,
+    charge_state::Integer,
+    ion_mass::Unitful.Mass,
+)
     upreferred(sqrt(density * (charge_state * q)^2 / ion_mass / ε0))
 end
 
@@ -83,7 +92,11 @@ function electron_inertial_length(density::NumberDensity)
     upreferred(c / electron_plasma_frequency(density))
 end
 
-function ion_inertial_length(density::NumberDensity, charge_state::Integer, ion_mass::Unitful.Mass)
+function ion_inertial_length(
+    density::NumberDensity,
+    charge_state::Integer,
+    ion_mass::Unitful.Mass,
+)
     upreferred(c / ion_plasma_frequency(density, charge_state, ion_mass))
 end
 
