@@ -1,4 +1,4 @@
-export Alfven_velocity, Alfven_speed
+# TODO: Sound speed
 
 function Alfven_velocity(B::BField, ρ::Density)
     return B / sqrt(μ0 * ρ) |> upreferred
@@ -81,4 +81,13 @@ function thermal_speed_coefficients(method::String, ndim::Int)
             ),
         )
     end
+end
+
+
+function electron_thermal_velocity(eot::EnergyOrTemp)
+    upreferred(sqrt(k * temperature(eot) / me))
+end
+
+function ion_thermal_velocity(eot::EnergyOrTemp, ion_mass::Unitful.Mass)
+    upreferred(sqrt(k * temperature(eot) / ion_mass))
 end
