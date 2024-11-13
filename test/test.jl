@@ -1,6 +1,7 @@
-using Unitful
 using PlasmaFormulary
-using Unitful: mp, me
+using PlasmaFormulary: ion_plasma_frequency
+using Unitful
+using Unitful: mp, me, q
 using Test
 using LinearAlgebra
 
@@ -16,3 +17,6 @@ rho = n * (mp + me)
       43173.870u"m/s"
 
 @test Alfven_velocity(B, rho) ≈ [-43173.870u"m/s", 0.0u"m/s", 0.0u"m/s"]
+@test plasma_frequency(1e19u"m^-3", q, mp) ≈ 4163294534.0u"s^-1"
+@test ion_plasma_frequency(1e19u"m^-3", 1, mp / Unitful.u) ≈ 4163294534.0u"s^-1"
+@test plasma_frequency(1e19u"m^-3") ≈ 1.783986365e11u"s^-1"

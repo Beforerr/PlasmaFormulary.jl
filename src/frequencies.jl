@@ -18,16 +18,19 @@ Particle plasma frequency, often this is the cold electrons plasma frequency.
 References:
 - https://en.wikipedia.org/wiki/Plasma_oscillation
 """
-function plasma_frequency(n::NumberDensity, q, mass::Mass)
-    upreferred(sqrt(n * q^2 / mass / ε0))
+function plasma_frequency(n::NumberDensity, q::Charge, mass::Mass)
+    upreferred(q * sqrt(n / mass / ε0))
 end
 
 plasma_frequency(n::NumberDensity) = plasma_frequency(n, Unitful.q, me)
 
-function ion_plasma_frequency(
-    density::NumberDensity,
-    charge_state::Integer,
-    ion_mass::Unitful.Mass,
-)
-    upreferred(sqrt(density * (charge_state * q)^2 / ion_mass / ε0))
-end
+"""
+    plasma_frequency(n, Z, mass_numb)
+
+Ion plasma frequency.
+"""
+plasma_frequency(n::NumberDensity, Z::Integer, mass_numb) =
+    plasma_frequency(n, Z * Unitful.q, mass_numb * Unitful.u)
+
+const electron_plasma_frequency = plasma_frequency
+const ion_plasma_frequency = plasma_frequency
