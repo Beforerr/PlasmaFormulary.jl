@@ -48,7 +48,13 @@ include("frequencies.jl")
 include("misc.jl")
 
 export plasma_beta
+export gyroradius, debye_length, inertial_length
 export Alfven_velocity, Alfven_speed
 export gyrofrequency, plasma_frequency
+
+# aliases
+const rc_ = gyroradius
+const di_ = ion_inertial_length
+export rc_, di_
 
 end

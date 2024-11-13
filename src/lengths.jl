@@ -1,6 +1,3 @@
-export gyroradius, rc_
-export debye_length
-
 """
 Calculate the radius of circular motion for a charged particle in a uniform magnetic field
 
@@ -30,8 +27,6 @@ gyroradius(val::Union{Velocity,EnergyOrTemp}, B::BField; kw...) = gyroradius(B, 
 electron_gyroradius(B, Vperp::Velocity) = gyroradius(B, me, Unitful.q, Vperp)
 electron_gyroradius(B, T::EnergyOrTemp) = electron_gyroradius(B, thermal_speed(T, me))
 
-const rc_ = gyroradius
-
 # electron and ion trapping rates excluded
 
 #electron and ion collision rates excluded
@@ -44,13 +39,22 @@ function classical_minimum_approach_distance(eot::EnergyOrTemp)
     upreferred(q^2 / energy(eot) / (4 * pi * ε0))
 end
 
-function electron_inertial_length(n::NumberDensity)
-    upreferred(c / electron_plasma_frequency(n))
+"""
+The inertial length is the characteristic length scale for a particle to be accelerated in a plasma. The Hall effect becomes important on length scales shorter than the ion inertial length.
+
+References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/latest/api/plasmapy.formulary.lengths.inertial_length.html)
+"""
+function inertial_length(n::NumberDensity, q, mass::Mass)
+    upreferred(c / plasma_frequency(n, q, mass))
 end
 
-function ion_inertial_length(n::NumberDensity, Z, mass::Unitful.Mass)
-    upreferred(c / ion_plasma_frequency(n, Z, mass))
+electron_inertial_length(n::NumberDensity) = upreferred(c / plasma_frequency(n))
+
+function ion_inertial_length(n::NumberDensity, Z, mass::Mass)
+    inertial_length(n, Z * Unitful.q, mass)
 end
+
+ion_inertial_length(n::NumberDensity; Z = 1, mass = mp) = ion_inertial_length(n, Z, mass)
 
 function debye_length(density::NumberDensity, eot::EnergyOrTemp)
     upreferred(sqrt(ε0 * energy(eot) / density / q^2))
