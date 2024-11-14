@@ -7,6 +7,7 @@ using Unitful: k, ħ
 using Unitful: me, mp, u
 using Unitful: Velocity, Mass, BField, Density, Charge
 using LinearAlgebra
+using Combinatorics
 
 @derived_dimension NumberDensity Unitful.𝐋^-3
 
@@ -40,7 +41,7 @@ molar_weight_of_air = 2.89647e-2 * u"kg / mol"
 # Fundamental plasma parameters
 # These formulas have been converted to use SI units from the original Gaussian cgs units
 # that are used in the 2023 edition of the formulary.
-
+include("utils.jl")
 include("dimensionless.jl")
 include("lengths.jl")
 include("speeds.jl")
