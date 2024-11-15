@@ -8,6 +8,7 @@ using Unitful: me, mp, u
 using Unitful: Velocity, Mass, BField, Density, Charge
 using LinearAlgebra
 using Combinatorics
+using ChargedParticles: Particle, ParticleLike
 
 @derived_dimension NumberDensity Unitful.𝐋^-3
 

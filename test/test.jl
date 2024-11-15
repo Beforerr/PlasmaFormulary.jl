@@ -5,7 +5,11 @@ using Unitful: mp, me, q
 using Test
 using LinearAlgebra
 
-@test rc_(0.2u"T", 1e6u"K") == rc_(1e6u"K", 0.2u"T") ≈ 0.0066825281u"m"
+@testset "Lengths" begin
+    @test gyroradius(0.2u"T", :p, 1e6u"K") ≈ 0.0067067967u"m"
+    @test inertial_length(5u"m^-3", q, me) ≈ 2376534.75u"m"
+    @test inertial_length(5u"m^-3", q, me) == inertial_length(q, me, 5u"m^-3")
+end
 
 B = [-0.014u"T", 0.0u"T", 0.0u"T"]
 Bmag = norm(B)

@@ -8,6 +8,10 @@ using Unitful
         Aqua.test_all(PlasmaFormulary)
     end
 
+    @testset "Calculations" begin
+        include("test.jl")
+    end
+
     @testset "Utils" begin
         include("utils.jl")
     end
