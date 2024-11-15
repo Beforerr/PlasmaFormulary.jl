@@ -2,7 +2,7 @@
     gyroradius(B::BField, p::ParticleLike, Vperp::Velocity; kw...)
     gyroradius(B::BField, p::ParticleLike, T::EnergyOrTemp; kw...)
 
-Calculate the radius of circular motion for a charged particle in a uniform magnetic field. Arguments can be given in any order. Mass and charge can be specified as keyword arguments.
+Calculate the radius of circular motion for a charged particle in a uniform magnetic field.
 
 Internal function:
 
@@ -13,7 +13,7 @@ References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/latest/api
 # Examples
 ```jldoctest
 julia> gyroradius(0.2u"T", :p, 1e6u"K")  # proton at 1 million K
-0.006706796704205342 m
+0.006706796656500042 m
 
 julia> gyroradius(0.2u"T", :e, 1e6u"K")  # electron at 1 million K
 0.00015651672339994665 m
