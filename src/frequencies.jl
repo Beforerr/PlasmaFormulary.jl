@@ -19,7 +19,7 @@ References:
 - https://en.wikipedia.org/wiki/Plasma_oscillation
 """
 function plasma_frequency(n::NumberDensity, q::Charge, mass::Mass)
-    upreferred(q * sqrt(n / mass / ε0))
+    upreferred(abs(q * sqrt(n / mass / ε0)))
 end
 
 plasma_frequency(n::NumberDensity) = plasma_frequency(n, Unitful.q, me)
