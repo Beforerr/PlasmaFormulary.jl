@@ -6,8 +6,11 @@ using Test
 using LinearAlgebra
 
 @testset "Lengths" begin
-    @test gyroradius(0.2u"T", :p, 1e6u"K") ≈ 0.0067067967u"m"
-    @test inertial_length(5u"m^-3", q, me) ≈ 2376534.75u"m"
+    T = 1e6u"K"
+    B = 0.2u"T"
+    p = :p
+    @test gyroradius(B, p, T) == gyroradius(T, B, p) ≈ 0.0067067967u"m"
+    @test inertial_length(5u"m^-3", :e) ≈ 2376534.75u"m"
 end
 
 @testset "Speed" begin
