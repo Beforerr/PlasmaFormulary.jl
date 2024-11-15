@@ -56,7 +56,6 @@ export gyrofrequency, plasma_frequency
 
 # aliases
 const rc_ = gyroradius
-const di_ = ion_inertial_length
-export rc_, di_
+export rc_
 
 end
