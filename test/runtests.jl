@@ -1,7 +1,6 @@
 using PlasmaFormulary
 using Test
 using Aqua
-using Unitful
 
 @testset "PlasmaFormulary.jl" begin
     @testset "Code quality (Aqua.jl)" begin
