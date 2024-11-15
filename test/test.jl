@@ -1,5 +1,4 @@
 using PlasmaFormulary
-using PlasmaFormulary: ion_plasma_frequency
 using Unitful
 using Unitful: mp, me, q
 using Test
@@ -27,7 +26,6 @@ end
 end
 
 @testset "Frequency" begin
-    @test plasma_frequency(1e19u"m^-3", q, mp) ≈ 4163294534.0u"s^-1"
-    @test ion_plasma_frequency(1e19u"m^-3", 1, mp / Unitful.u) ≈ 4163294534.0u"s^-1"
+    @test plasma_frequency(1e19u"m^-3", :p) ≈ 4163294534.0u"s^-1"
     @test plasma_frequency(1e19u"m^-3") ≈ 1.783986365e11u"s^-1"
 end

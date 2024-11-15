@@ -66,7 +66,7 @@ References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/latest/api
 function inertial_length end
 
 _inertial_length(n::NumberDensity, q::Charge, mass::Mass) =
-    upreferred(c / plasma_frequency(n, q, mass))
+    upreferred(c / _plasma_frequency(n, q, mass))
 
 @permutable_args function inertial_length(n::NumberDensity, p::ParticleLike; kw...)
     p = Particle(p; kw...)
