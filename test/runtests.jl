@@ -8,7 +8,7 @@ using Unitful
         Aqua.test_all(PlasmaFormulary)
     end
 
-    @testset "Conversions" begin
-        @test isapprox(uconvert(u"erg/K", PlasmaFormulary.boltzmann_constant), 1.38065e-16 * u"erg/K")
+    @testset "Utils" begin
+        include("utils.jl")
     end
 end
