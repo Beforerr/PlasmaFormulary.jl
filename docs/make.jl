@@ -14,4 +14,4 @@ makedocs(;
     pages = ["Home" => "index.md", "API Reference" => "api.md"],
 )
 
-deploydocs(; repo = "github.com/adamslc/PlasmaFormulary.jl", devbranch = "main")
+deploydocs(; repo = "github.com/Beforerr/PlasmaFormulary.jl", devbranch = "main")

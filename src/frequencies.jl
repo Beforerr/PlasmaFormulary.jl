@@ -11,7 +11,7 @@ Internal function:
 References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/latest/api/plasmapy.formulary.frequencies.gyrofrequency.html)
 
 # Examples
-```jldoctest
+```jldoctest; filter = r"(\\^-1|⁻¹)"
 julia> gyrofrequency(0.01u"T", :p)  # proton gyrofrequency
 957883.3292211705 s⁻¹
 
@@ -46,7 +46,7 @@ Internal function:
 References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/latest/api/plasmapy.formulary.frequencies.plasma_frequency.html)
 
 # Examples
-```jldoctest
+```jldoctest; filter = r"(\\^-1|⁻¹)"
 julia> plasma_frequency(1e19u"m^-3")  # plasma frequency
 1.7839863654934653e11 s⁻¹
 
