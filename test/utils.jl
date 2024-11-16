@@ -31,3 +31,11 @@ end
     @test test_func_kw(42, "hello", z = 2.71) == "x=42, y=hello, z=2.71"
     @test test_func_kw("hello", 42; z = 520.0) == "x=42, y=hello, z=520.0"
 end
+
+@testset "permutable_args macro - one-line function definition" begin
+    @permutable_args test_func_one_line(x::Int, y::String; z::Float64 = 3.14) =
+        "x=$x, y=$y, z=$z"
+    @test test_func_one_line(42, "hello") == "x=42, y=hello, z=3.14"
+    @test test_func_one_line(42, "hello", z = 2.71) == "x=42, y=hello, z=2.71"
+    @test test_func_one_line("hello", 42; z = 520.0) == "x=42, y=hello, z=520.0"
+end

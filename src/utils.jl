@@ -2,12 +2,20 @@
     @permutable_args function_name((arg1, Type1), (arg2, Type2), ...)
 
 Generate multiple method definitions allowing arbitrary argument order based on types.
+Supports both multi-line function definitions and one-line function definitions.
+
+# Examples
+```julia
+@permutable_args function test(x::Int, y::String)
+    return x, y
+end
+
+@permutable_args test(x::Int, y::String) = x + length(y)
+```
 """
 macro permutable_args(expr)
-    # Ensure the expression is a function definition
-    @assert expr.head == :function "Expression must be a function definition"
-
-    # Extract function signature and body
+    # Handle both function and assignment expressions
+    @assert expr.head in (:(=), :function) "Expression must be a function definition"
     func_sig = expr.args[1]
     func_body = expr.args[2]
 
