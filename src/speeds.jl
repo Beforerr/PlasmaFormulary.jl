@@ -1,25 +1,67 @@
 # TODO: Sound speed
 
-function Alfven_velocity(B::BField, ρ::Density)
-    return B / sqrt(μ0 * ρ) |> upreferred
+const BFields = Union{BField,AbstractVector{<:BField}}
+
+"""
+    Alfven_velocity(B::BFields, ρ::Density)
+    Alfven_velocity(B::BFields, n::NumberDensity; mass_numb = 1, z = 1)
+
+Calculate the Alfvén velocity (v_A = B/√(μ₀ρ)) in a magnetized plasma.
+
+# Arguments
+- `B`: Magnetic field strength (scalar or vector)
+- `ρ`: Mass density
+- `n`: Number density
+- `mass_numb=1`: Mass number of the ion species
+- `z=1`: Ion charge number
+
+# Examples
+```julia
+# Using mass density
+B = 1.0u"T"
+ρ = 1.0u"kg/m^3"
+va = Alfven_velocity(B, ρ)
+
+# Using number density
+n = 1.0e19u"m^-3"
+va = Alfven_velocity(B, n, mass_numb=1, z=1)
+
+# Vector input
+B = [1.0, 2.0, 3.0]u"T"
+va = Alfven_velocity(B, n)
+```
+
+See also: [`Alfven_speed`](@ref)
+"""
+function Alfven_velocity end
+
+@permutable_args function Alfven_velocity(B::BFields, ρ::Density)
+    return B ./ sqrt(μ0 * ρ) .|> upreferred
 end
 
-function Alfven_velocity(B::BField, n::NumberDensity; mass_numb = 1, Z = 1)
-    ρ = n * (mass_numb * mp + Z * me)
+@permutable_args function Alfven_velocity(
+    B::BFields,
+    n::NumberDensity;
+    mass_numb = 1,
+    z = 1,
+)
+    ρ = n * (mass_numb * mp + z * me)
     return Alfven_velocity(B, ρ)
 end
 
-Alfven_velocity(B::AbstractVector, args...; kwargs...) =
-    [Alfven_velocity(Bi, args...; kwargs...) for Bi in B]
-
 """
-    Alfven_speed(args...; kwargs...)
+    Alfven_speed(B::BField, ρ::Density)
+    Alfven_speed(B::BField, n::NumberDensity; mass_numb = 1, z = 1)
 
 The typical propagation speed of magnetic disturbances in a quasineutral plasma.
 
-References: [PlasmaPy API Documentation](https://docs.plasmapy.org/en/stable/api/plasmapy.formulary.speeds.Alfven_speed.html)
+References: [Wikipedia](https://en.wikipedia.org/wiki/Alfven_wave), [PlasmaPy API](https://docs.plasmapy.org/en/latest/api/plasmapy.formulary.speeds.Alfven_speed.html)
 """
-Alfven_speed(args...; kwargs...) = norm(Alfven_velocity(args...; kwargs...))
+function Alfven_speed end
+
+@permutable_args Alfven_speed(B::BFields, n::NumberDensity; mass_numb = 1, z = 1) =
+    norm(Alfven_velocity(B, n; mass_numb, z))
+@permutable_args Alfven_speed(B::BFields, ρ::Density) = norm(Alfven_velocity(B, ρ))
 
 
 function thermal_speed(
