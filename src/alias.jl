@@ -19,7 +19,8 @@ const cwp_ = inertial_length
 export rc_, rhoc_, cwp_
 
 # https://docs.plasmapy.org/en/stable/formulary/speeds.html
+const cs_ = ion_sound_speed
 const va_ = Alfven_speed
 const vth_ = thermal_velocity
-export va_, vth_
+export cs_, va_, vth_
 end
